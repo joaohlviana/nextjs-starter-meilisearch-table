@@ -1,0 +1,44 @@
+{
+  "movies": [
+    {
+      "id": "tt0111161",
+      "title": "The Shawshank Redemption",
+      "overview": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "poster": "https://images.pexels.com/photos/436413/pexels-photo-436413.jpeg",
+      "rating": 9.3,
+      "year": 1994
+    },
+    {
+      "id": "tt0068646",
+      "title": "The Godfather",
+      "overview": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "poster": "https://images.pexels.com/photos/2773498/pexels-photo-2773498.jpeg",
+      "rating": 9.2,
+      "year": 1972
+    },
+    {
+      "id": "tt0468569",
+      "title": "The Dark Knight",
+      "overview": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+      "poster": "https://images.pexels.com/photos/1117132/pexels-photo-1117132.jpeg",
+      "rating": 9.0,
+      "year": 2008
+    },
+    {
+      "id": "tt0137523",
+      "title": "Fight Club",
+      "overview": "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.",
+      "poster": "https://images.pexels.com/photos/4348404/pexels-photo-4348404.jpeg",
+      "rating": 8.8,
+      "year": 1999
+    },
+    {
+      "id": "tt0110912",
+      "title": "Pulp Fiction",
+      "overview": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+      "poster": "https://images.pexels.com/photos/2873486/pexels-photo-2873486.jpeg",
+      "rating": 8.9,
+      "year": 1994
+    }
+  ]
+}

@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const client = new MeiliSearch({
-  host: 'http://localhost:7700',
+  host: 'http://localhost:3000',
   apiKey: 'masterKey',
   requestConfig: {
     timeout: 10000 // Add timeout of 10 seconds

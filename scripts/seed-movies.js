@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const client = new MeiliSearch({
-  host: 'http://localhost:3000',
-  apiKey: 'masterKey',
+  host: process.env.NEXT_PUBLIC_MEILISEARCH_URL || 'http://127.0.0.1:7700',
+  apiKey: process.env.NEXT_PUBLIC_MEILISEARCH_KEY || 'masterKey',
   requestConfig: {
     timeout: 10000 // Add timeout of 10 seconds
   }
@@ -22,6 +22,8 @@ async function seedMovies() {
       console.log('MeiliSearch server is healthy');
     } catch (error) {
       console.error('MeiliSearch server is not running or not accessible. Please start the server first.');
+      console.error('Make sure MeiliSearch is running on the correct port (default: 7700)');
+      console.error('Error details:', error.message);
       process.exit(1);
     }
 

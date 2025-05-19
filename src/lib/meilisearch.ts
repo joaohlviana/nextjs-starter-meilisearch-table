@@ -20,7 +20,10 @@ class MeilisearchClient {
 
     this.client = new MeiliSearch({ 
       host,
-      apiKey
+      apiKey,
+      requestConfig: {
+        timeout: 10000 // Add timeout of 10 seconds
+      }
     });
   }
 
@@ -37,7 +40,12 @@ class MeilisearchClient {
   }
 
   public async health() {
-    return await this.client.health();
+    try {
+      return await this.client.health();
+    } catch (error) {
+      console.error('MeiliSearch health check failed:', error);
+      throw error;
+    }
   }
 }
 

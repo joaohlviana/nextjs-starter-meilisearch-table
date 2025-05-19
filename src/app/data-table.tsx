@@ -33,6 +33,7 @@ export function DataTable() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Array<Organization>>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
 
   const table = useReactTable({
     data: searchResults,
@@ -43,14 +44,35 @@ export function DataTable() {
 
   const index = meilisearchClient.getIndex("organizations");
 
+  async function verifyConnection() {
+    try {
+      await meilisearchClient.health();
+      setIsConnected(true);
+      setError(null);
+      return true;
+    } catch (err) {
+      const errorMessage = 'Unable to connect to Meilisearch server. Please ensure it is running at ' + 
+        process.env.NEXT_PUBLIC_MEILISEARCH_URL;
+      setError(errorMessage);
+      setIsConnected(false);
+      return false;
+    }
+  }
+
   async function search(query = "") {
     try {
+      if (!isConnected && !(await verifyConnection())) {
+        return [];
+      }
+
       setError(null);
       const results = await index.search(truncate(query, 50));
       console.log("Search results:", results);
       return results.hits;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch search results';
+      const errorMessage = err instanceof Error 
+        ? `Search error: ${err.message}` 
+        : 'Failed to fetch search results. Please check your Meilisearch configuration.';
       console.error("Search error:", err);
       setError(errorMessage);
       return [];
@@ -60,8 +82,10 @@ export function DataTable() {
   useEffect(() => {
     (async () => {
       try {
-        const results = await search();
-        setSearchResults(results);
+        if (await verifyConnection()) {
+          const results = await search();
+          setSearchResults(results);
+        }
       } catch (err) {
         console.error("Initial search error:", err);
       }
@@ -81,11 +105,12 @@ export function DataTable() {
             })
           }}
           className="h-8 w-[150px] lg:w-[250px]"
+          disabled={!isConnected}
         />
       </div>
       {error && (
-        <div className="text-red-500 mb-4">
-          Error: {error}
+        <div className="text-red-500 mb-4 p-4 border border-red-200 rounded-md bg-red-50">
+          {error}
         </div>
       )}
       <div className="rounded-md border">
@@ -137,7 +162,7 @@ export function DataTable() {
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          disabled={!table.getCanPreviousPage() || !isConnected}
         >
           Previous
         </Button>
@@ -145,7 +170,7 @@ export function DataTable() {
           variant="outline"
           size="sm"
           onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          disabled={!table.getCanNextPage() || !isConnected}
         >
           Next
         </Button>

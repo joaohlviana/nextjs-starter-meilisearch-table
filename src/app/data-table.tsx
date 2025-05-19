@@ -32,31 +32,33 @@ function truncate(text: string, length: number) {
 export function DataTable() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Array<Organization> | any>();
+  const [error, setError] = useState<string | null>(null);
 
   const index = meilisearchClient.getIndex("organizations");
 
-  const table = useReactTable({
-    data: searchResults || [],
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  })
-
   async function search(query = "") {
-    return await index
-      .search(truncate(query, 50))
-      .then((res) => {
-        console.log("res:", res);
-        return res.hits;
-      })
-      .catch((err) => {
-        console.error("err:", err);
-        return [];
-      });
-  };
+    try {
+      setError(null);
+      const results = await index.search(truncate(query, 50));
+      console.log("Search results:", results);
+      return results.hits;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch search results';
+      console.error("Search error:", err);
+      setError(errorMessage);
+      return [];
+    }
+  }
 
   useEffect(() => {
-    (async () => setSearchResults(await search()))();
+    (async () => {
+      try {
+        const results = await search();
+        setSearchResults(results);
+      } catch (err) {
+        console.error("Initial search error:", err);
+      }
+    })();
   }, []);
 
   return (
@@ -74,6 +76,11 @@ export function DataTable() {
           className="h-8 w-[150px] lg:w-[250px]"
         />
       </div>
+      {error && (
+        <div className="text-red-500 mb-4">
+          Error: {error}
+        </div>
+      )}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -111,7 +118,7 @@ export function DataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  {error ? 'Error loading results' : 'No results.'}
                 </TableCell>
               </TableRow>
             )}

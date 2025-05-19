@@ -1,23 +1,14 @@
-import { DataTable } from "./data-table"
-// import { meilisearchClient } from "@/lib/meilisearch"
+import { MovieSearch } from "./movies/movie-search"
 
-export default async function DemoPage() {
-  // const index = meilisearchClient.getIndex("organizations");
-
-  // const result = await index.search("a");
-  // console.log(result);
-
-  return (
-    <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
-      <div className="flex items-center justify-between space-y-2">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">Companies</h2>
-          <p className="text-muted-foreground">
-            Let search into the companies!
-          </p>
-        </div>
+export default function HomePage() {
+  return(
+    <div className="container mx-auto py-10">
+      <h1 className="text-4xl font-bold mb-8">Movie Search</h1>
+      <div className="mb-4">
+        <p className="text-muted-foreground">
+          Search through our collection of movies. Results update as you type.
+        </p>
       </div>
-      <DataTable />
+      <MovieSearch />
     </div>
   )
-}

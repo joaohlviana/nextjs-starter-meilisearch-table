@@ -2,7 +2,7 @@ import { MeiliSearch } from 'meilisearch';
 import movies from '../src/data/movies.json';
 
 const client = new MeiliSearch({
-  host: 'http://localhost:7700',
+  host: 'http://localhost:3000',
   apiKey: 'masterKey' // Default master key if not changed
 });
 

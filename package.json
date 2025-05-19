@@ -1,0 +1,21 @@
+{
+  "name": "nextjs-starter-meilisearch-table",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start", 
+    "lint": "next lint"
+    "seed": "node --experimental-json-modules scripts/seed-movies.js"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "dotenv": "^16.3.1",
+    "lucide-react": "^0.263.0",
+    "meilisearch": "^0.35.0",
+    "tailwind-merge": "^1.14.0"
+  }
+}

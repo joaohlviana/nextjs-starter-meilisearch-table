@@ -31,8 +31,15 @@ function truncate(text: string, length: number) {
 
 export function DataTable() {
   const [query, setQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<Array<Organization> | any>();
+  const [searchResults, setSearchResults] = useState<Array<Organization>>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const table = useReactTable({
+    data: searchResults,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
 
   const index = meilisearchClient.getIndex("organizations");
 

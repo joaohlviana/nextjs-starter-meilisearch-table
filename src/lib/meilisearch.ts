@@ -11,7 +11,7 @@ class MeilisearchClient {
     const apiKey = process.env.NEXT_PUBLIC_MEILISEARCH_SEARCH_KEY;
 
     if (!host) {
-      throw new Error('MEILISEARCH_URL is not defined');
+      throw new Error('NEXT_PUBLIC_MEILISEARCH_URL is not defined');
     }
 
     this.client = new MeiliSearch({ host, apiKey });
@@ -28,7 +28,6 @@ class MeilisearchClient {
   public getIndex(index: string): Index {
     return this.client.index(index);
   }
-
 }
 
 export const meilisearchClient = MeilisearchClient.getInstance();

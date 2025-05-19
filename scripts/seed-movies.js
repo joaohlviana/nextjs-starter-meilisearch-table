@@ -1,7 +1,13 @@
-const { MeiliSearch } = require('meilisearch');
-const { readFile } = require('fs/promises');
-const path = require('path');
-require('dotenv').config();
+import { MeiliSearch } from 'meilisearch';
+import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const MEILISEARCH_URL = process.env.NEXT_PUBLIC_MEILISEARCH_URL || 'http://127.0.0.1:7700';
 const MEILISEARCH_KEY = process.env.NEXT_PUBLIC_MEILISEARCH_SEARCH_KEY || 'masterKey';
@@ -29,7 +35,7 @@ async function seedMovies() {
 
     // Read movies data
     const moviesData = JSON.parse(
-      await readFile(path.join(__dirname, '../src/data/movies.json'), 'utf-8')
+      await readFile(join(__dirname, '../src/data/movies.json'), 'utf-8')
     );
 
     // Create movies index

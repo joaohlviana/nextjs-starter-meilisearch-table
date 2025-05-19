@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node scripts/seed-movies.js"
+    "seed": "node --experimental-json-modules scripts/seed-movies.js"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.0.6",

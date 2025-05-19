@@ -35,6 +35,10 @@ class MeilisearchClient {
   public getIndex(index: string): Index {
     return this.client.index(index);
   }
+
+  public async health() {
+    return await this.client.health();
+  }
 }
 
 export const meilisearchClient = MeilisearchClient.getInstance();

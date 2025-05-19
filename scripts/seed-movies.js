@@ -42,3 +42,6 @@ async function seedMovies() {
     console.error('Error seeding movies:', error);
   }
 }
+
+// Execute the seed function
+seedMovies();
